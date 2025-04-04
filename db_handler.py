@@ -1,15 +1,9 @@
 import chromadb
 from chromadb import Settings
 from chromadb import Documents, EmbeddingFunction, Embeddings
-from langchain_huggingface import HuggingFaceEmbeddings
+from sentence_transformers import SentenceTransformer
 
-embedding_model = HuggingFaceEmbeddings(
-    model_name = "jinaai/jina-embeddings-v3",
-    model_kwargs={
-    "device":'cuda',
-    "trust_remote_code": True
-    },
-)
+embedding_model = SentenceTransformer('jinaai/jina-embeddings-v3', trust_remote_code=True)
 
 class MyJinaEmbeddingFunction(EmbeddingFunction):
     def __call__(self, input: Documents) -> Embeddings:
