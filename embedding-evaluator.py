@@ -1,3 +1,4 @@
+import sys
 import json
 from bug_data_retriever import get_bug_data
 
@@ -46,7 +47,7 @@ def calculate_accuracy_at_k(bug_data):
 
 
 def calculate_mean_reciprocal_rank_at_k(bug_data):
-    for top in [10,20,30,40,50]:
+    for top in [10,30,50]:
         total_bug = 0
         inverse_rank = 0
         for bug in bug_data:
@@ -71,7 +72,7 @@ def calculate_mean_reciprocal_rank_at_k(bug_data):
            
      
 def calculate_mean_average_precision_at_k(bug_data):
-    for top in [10,20,30,40,50]:
+    for top in [10,30,50]:
         total_bug = 0
         total_average_precision = 0
         for bug in bug_data:
@@ -99,11 +100,11 @@ def calculate_mean_average_precision_at_k(bug_data):
 
 
 def main():
-    project = 'tomcat'
-    input_xml_file = '../dataset/'+project+'-merged.xml'
-    
+    project = sys.argv[1]
+    xml_path = sys.argv[2]
+
     bug_data = []
-    bugs = get_bug_data(input_xml_file)
+    bugs = get_bug_data(xml_path)
     for bug in bugs:
         # print(bug['bug_id'])        
         suspicious_files = get_suspicious_files(project+'_bug_data/'+bug['bug_id']+'.json')
