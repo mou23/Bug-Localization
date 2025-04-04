@@ -1,0 +1,8 @@
+__pycache__/
+aspectj_bug_data/
+birt_bug_data/
+eclipse_bug_data/
+jdt_bug_data/
+swt_bug_data/
+tomcat_bug_data/
+temp/
