@@ -1,7 +1,7 @@
 import os
 import json
 import hashlib
-from transformers import AutoTokenizer
+from sentence_transformers import SentenceTransformer
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 embedding_model = SentenceTransformer('jinaai/jina-embeddings-v3')

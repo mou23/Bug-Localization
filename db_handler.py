@@ -2,7 +2,6 @@ import chromadb
 from chromadb import Settings
 from chromadb import Documents, EmbeddingFunction, Embeddings
 from sentence_transformers import SentenceTransformer
-import time
 
 embedding_model = SentenceTransformer('jinaai/jina-embeddings-v3')
 
