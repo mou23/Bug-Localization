@@ -1,6 +1,5 @@
 import os
 import json
-import time
 from file_parser import *
 from collection_handler import *
 from db_handler import create_file_collection, delete_file_collection, get_file_collection
@@ -55,7 +54,7 @@ def process_files_from_directory(repo_path):
                 #     print("*************")
     insert_into_file_collection(file_collection, documents, metadatas)
 
-def manage_file_processing(git_repo, bug_id, prev_commit, current_commit):
+def manage_file_processing(project, git_repo, bug_id, prev_commit, current_commit):
     if(prev_commit==""):
         git_repo.checkout(current_commit)
         # time.sleep(30)
@@ -68,7 +67,7 @@ def manage_file_processing(git_repo, bug_id, prev_commit, current_commit):
             process_files_from_directory(git_repo.path)
         else:
             process_files_from_git_diff(modified_files)
-    store_file_data(bug_id)
+    store_file_data(project, bug_id)
 
 def process_files_from_git_diff(modified_files):
     documents = []
@@ -203,7 +202,7 @@ def process_files_from_git_diff(modified_files):
     insert_into_file_collection(file_collection, documents,metadatas)
 
 
-def store_file_data(bug_id):
+def store_file_data(project, bug_id):
     try:
         global filewise_method_data    
         file_paths = filewise_method_data.keys()
@@ -217,7 +216,11 @@ def store_file_data(bug_id):
                 }
             all_file_data.append(file_data)
         
-        filename = f"bug_data/{bug_id}_filewise_method_data.json"
+        filename = f"{project}_bug_data/{bug_id}_filewise_method_data.json"
+        output_dir = os.path.dirname(filename)
+    
+        if output_dir and not os.path.exists(output_dir):
+            os.makedirs(output_dir)
         with open(filename, 'w') as json_file:
             json.dump(all_file_data, json_file, indent=4)
     except Exception as e:

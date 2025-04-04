@@ -21,22 +21,9 @@ def main():
     initialize_db()
 
     for bug in new_bugs:
-        print("bug-id:", bug['bug_id'],bug['fixing_commit'])
-        starting_time = datetime.now()
-        manage_file_processing(git_repo, bug['bug_id'], prev_commit, f"{bug['fixing_commit']}~1")
-        ending_time = datetime.now()
-        print("initial embedding time:", ending_time-starting_time)
-        prev_commit = f"{bug['fixing_commit']}~1"
-        
-        get_suspicious_files(project, bug['bug_id'], str(bug['summary'] or '')+ ' ' + str(bug['description'] or ''))
-        break
-
-    for bug in new_bugs[1:]:
         print("bug-id: " + str(bug['bug_id']))
         print('commits ', prev_commit, f"{bug['fixing_commit']}~1")
-        
         manage_file_processing(git_repo, bug['bug_id'], prev_commit, f"{bug['fixing_commit']}~1")
-
         starting_time = datetime.now()
         get_suspicious_files(project, bug['bug_id'], str(bug['summary'] or '')+ ' ' + str(bug['description'] or ''))
         ending_time = datetime.now()
