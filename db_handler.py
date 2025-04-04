@@ -3,7 +3,7 @@ from chromadb import Settings
 from chromadb import Documents, EmbeddingFunction, Embeddings
 from sentence_transformers import SentenceTransformer
 
-embedding_model = SentenceTransformer('jinaai/jina-embeddings-v3')
+embedding_model = SentenceTransformer('jinaai/jina-embeddings-v3', trust_remote_code=True)
 
 class MyJinaEmbeddingFunction(EmbeddingFunction):
     def __call__(self, input: Documents) -> Embeddings:
