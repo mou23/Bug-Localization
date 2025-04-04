@@ -1,16 +1,16 @@
 import chromadb
 from chromadb import Settings
 from chromadb import Documents, EmbeddingFunction, Embeddings
-from FlagEmbedding import BGEM3FlagModel
+from sentence_transformers import SentenceTransformer
 import time
 
-embedding_model = BGEM3FlagModel('BAAI/bge-m3')
+embedding_model = SentenceTransformer('jinaai/jina-embeddings-v3')
 
-class MyBgeEmbeddingFunction(EmbeddingFunction):
+class MyJinaEmbeddingFunction(EmbeddingFunction):
     def __call__(self, input: Documents) -> Embeddings:
         try:
-            embeddings = embedding_model.encode(input, convert_to_numpy=True).tolist()
-            return embeddings['dense_vecs']
+            embeddings = embedding_model.encode(input, convert_to_numpy=True)
+            return embeddings
         except Exception as e:
             print(e)
             print("problem in embedding!")
@@ -24,8 +24,8 @@ def initialize_db():
 
 def create_file_collection():
     global client, file_collection
-    bge_embedding_function = MyBgeEmbeddingFunction()
-    file_collection = client.create_collection(name='java-files', embedding_function= bge_embedding_function, metadata={"hnsw:space": "cosine"}) #, "hnsw:M": 32})
+    jina_embedding_function = MyJinaEmbeddingFunction()
+    file_collection = client.create_collection(name='java-files', embedding_function= jina_embedding_function, metadata={"hnsw:space": "cosine"}) #, "hnsw:M": 32})
 
     return file_collection
 

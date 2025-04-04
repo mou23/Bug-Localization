@@ -4,7 +4,9 @@ import hashlib
 from transformers import AutoTokenizer
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-tokenizer = AutoTokenizer.from_pretrained('BAAI/bge-m3')
+embedding_model = SentenceTransformer('jinaai/jina-embeddings-v3')
+
+tokenizer = embedding_model.tokenizer
 
 def count_tokens(text):
     return len(tokenizer.encode(text, add_special_tokens=False))

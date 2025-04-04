@@ -8,4 +8,4 @@ langchain-text-splitters==0.2.0
 openai==1.54.4
 numpy==1.26.4
 rapidfuzz==3.10.1
-FlagEmbedding
+sentence-transformers
