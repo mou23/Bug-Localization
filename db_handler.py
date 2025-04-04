@@ -9,7 +9,7 @@ class MyJinaEmbeddingFunction(EmbeddingFunction):
     def __call__(self, input: Documents) -> Embeddings:
         try:
             embeddings = embedding_model.encode(input, convert_to_numpy=True)
-            return embeddings
+            return embeddings.tolist()
         except Exception as e:
             print(e)
             print("problem in embedding!")
