@@ -23,7 +23,7 @@ def main():
     for bug in new_bugs:
         print("bug-id: " + str(bug['bug_id']))
         print('commits ', prev_commit, f"{bug['fixing_commit']}~1")
-        manage_file_processing(git_repo, bug['bug_id'], prev_commit, f"{bug['fixing_commit']}~1")
+        manage_file_processing(project, git_repo, bug['bug_id'], prev_commit, f"{bug['fixing_commit']}~1")
         starting_time = datetime.now()
         get_suspicious_files(project, bug['bug_id'], str(bug['summary'] or '')+ ' ' + str(bug['description'] or ''))
         ending_time = datetime.now()
